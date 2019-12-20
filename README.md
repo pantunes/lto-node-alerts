@@ -16,7 +16,7 @@ These notifications are sent in the Telegram channel [LTO Node Alerts](https://t
 
 Clone project repository:
 ```bash
-$ hg clone git@github.com:pantunes/lto-node-alerts.git
+$ git clone git@github.com:pantunes/lto-node-alerts.git
 $ cd lto-node-alerts
 ```
 
