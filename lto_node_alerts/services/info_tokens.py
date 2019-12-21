@@ -25,7 +25,9 @@ def job():
 
         lines.append('- {}\t{} LTO'.format(_node['name'], node['balance']))
 
-    bot.send_message(
-        os.environ['GROUP_CHAT_ID'],
-        s.MESSAGE_INFO_TOKENS.format("\n".join(lines))
-    )
+    if lines:
+        text = "\n".join(lines)
+    else:
+        text = "(no nodes)"
+
+    bot.send_message(os.environ['GROUP_CHAT_ID'], text)
