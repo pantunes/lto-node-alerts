@@ -4,7 +4,7 @@ NODES = {
     '3JuhBndwegTukoWn2mQhHxRXK38qaHqDG8x':
         dict(name="Signrequest", min_tokens=10000),
     '3JoCVgfHnaUT1JUvaw73e6rSEDSXqozzE5T':
-        dict(name="Firm24 / OnlineFlexBV", min_tokens=10000),
+        dict(name="Firm24/OF BV", min_tokens=10000),
     '3Jt8aNgrks9JaY8da8oAAZVpdtbor29vBoZ':
         dict(name="VI-D", min_tokens=10000),
     '3JjGwHSBgiHctzt9wDo6wHVwEnTVV2S33pU':
