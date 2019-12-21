@@ -16,14 +16,16 @@ def job():
     if response.status_code != 200:
         raise AssertionError("Request error: {}".format(s.URL))
 
+    lines = list()
     for node in response.json():
         if node['generator'] not in s.NODES:
             continue
 
         _node = s.NODES[node['generator']]
 
-        if node['balance'] < _node['min_tokens']:
-            bot.send_message(
-                os.environ['GROUP_CHAT_ID'],
-                s.MESSAGE_MINIMUM_TOKENS.format(_node['name'], node['balance'])
-            )
+        lines.append('- {}\t{} LTO'.format(_node['name'], node['balance']))
+
+    bot.send_message(
+        os.environ['GROUP_CHAT_ID'],
+        s.MESSAGE_INFO_TOKENS.format("\n".join(lines))
+    )
