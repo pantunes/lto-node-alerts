@@ -23,7 +23,7 @@ def job():
 
         _node = s.NODES[node['generator']]
 
-        lines.append('- {}\t{} LTO'.format(_node['name'], node['balance']))
+        lines.append(' 🔹 {}: **{} LTO**'.format(_node['name'], node['balance']))
 
     if lines:
         text = "\n".join(lines)
