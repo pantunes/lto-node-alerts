@@ -19,4 +19,8 @@ from lto_node_alerts.settings_nodes import (
     NODES,
 )  # noqa
 
-__all__ = ['NODES']
+from lto_node_alerts.settings_bot import (
+    MESSAGES,
+)  # noqa
+
+__all__ = ['NODES', 'MESSAGES']

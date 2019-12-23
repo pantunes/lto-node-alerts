@@ -39,4 +39,17 @@ def scheduler():
 
 
 def start():
+    @bot.message_handler(commands=['start'])
+    def on_start(message):
+        bot.reply_to(message, s.MESSAGES['start'])
+
+    @bot.message_handler(commands=['list'])
+    def on_start(message):
+        lines = list()
+        for node_id, node_data in s.NODES.items():
+            lines.append(
+                '🔹 {} 👉 {}'.format(node_id, node_data['name'])
+            )
+        bot.reply_to(message, "\n".join(lines))
+
     bot.polling()
