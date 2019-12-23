@@ -50,6 +50,10 @@ def start():
             lines.append(
                 '🔹 {} 👉 {}'.format(node_id, node_data['name'])
             )
-        bot.reply_to(message, "\n".join(lines))
+        bot.reply_to(
+            message,
+            s.MESSAGES['list'].format("\n".join(lines)),
+            parse_mode='Markdown'
+        )
 
     bot.polling()
