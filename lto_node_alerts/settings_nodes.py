@@ -13,4 +13,6 @@ NODES = {
         dict(name="lto.services", min_tokens=10000),
     '3JhyQWe7BC7impmVu6YtctdaFuR1EK6vVne':
         dict(name="Zavodil", min_tokens=10000),
+    '3Jhkp3Xtg2wyT6NoEtJB2VQPAHiYuqYUVBp':
+        dict(name="LTO-lease.com", min_tokens=10000),
 }

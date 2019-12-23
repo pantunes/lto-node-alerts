@@ -1,6 +1,7 @@
 import os
 import requests
 from lto_node_alerts import settings as s
+from lto_node_alerts import utils as u
 from lto_node_alerts.bot import bot
 
 
@@ -23,7 +24,11 @@ def job():
 
         _node = s.NODES[node['generator']]
 
-        lines.append('🔹 {}: *{} LTO*'.format(_node['name'], node['balance']))
+        lines.append(
+            '🔹 {}: *{} LTO*'.format(
+                _node['name'], u.get_number_formatted(node['balance'])
+            )
+        )
 
     if lines:
         text = "\n".join(lines)
@@ -35,3 +40,5 @@ def job():
         text=s.MESSAGE_INFO_TOKENS.format(text),
         parse_mode='Markdown'
     )
+
+    # print(s.MESSAGE_INFO_TOKENS.format(text))
