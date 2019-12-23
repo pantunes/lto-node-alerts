@@ -23,11 +23,15 @@ def job():
 
         _node = s.NODES[node['generator']]
 
-        lines.append(' 🔹 {}: **{} LTO**'.format(_node['name'], node['balance']))
+        lines.append('🔹 {}: *{} LTO*'.format(_node['name'], node['balance']))
 
     if lines:
         text = "\n".join(lines)
     else:
         text = "(no nodes)"
 
-    bot.send_message(os.environ['GROUP_CHAT_ID'], text)
+    bot.send_message(
+        chat_id=os.environ['GROUP_CHAT_ID'],
+        text=s.MESSAGE_INFO_TOKENS.format(text),
+        parse_mode='Markdown'
+    )
