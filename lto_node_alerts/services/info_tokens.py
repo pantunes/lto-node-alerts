@@ -25,7 +25,7 @@ def job():
         _node = s.NODES[node['generator']]
 
         lines.append(
-            '🔹 {}: *{} LTO*'.format(
+            '🔹 {} 👉 *{} LTO*'.format(
                 _node['name'], u.get_number_formatted(node['balance'])
             )
         )
