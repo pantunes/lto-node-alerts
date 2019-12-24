@@ -25,8 +25,11 @@ def job():
         _node = s.NODES[node['generator']]
 
         lines.append(
-            '🔹 {} 👉 *{} LTO*'.format(
-                _node['name'], u.get_number_formatted(node['balance'])
+            '🔹 <a href="https://explorer.lto.network/addresses/{node_id}">'
+            '{node_name}</a> 👉 <b>{node_balance} LTO</b>'.format(
+                node_id=_node['node_id'],
+                node_name=_node['name'],
+                node_balance=u.get_number_formatted(node['balance'])
             )
         )
 
@@ -38,7 +41,5 @@ def job():
     bot.send_message(
         chat_id=os.environ['GROUP_CHAT_ID'],
         text=s.MESSAGE_INFO_TOKENS.format(text),
-        parse_mode='Markdown'
+        parse_mode='HTML'
     )
-
-    # print(s.MESSAGE_INFO_TOKENS.format(text))

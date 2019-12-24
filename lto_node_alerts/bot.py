@@ -48,12 +48,16 @@ def start():
         lines = list()
         for node_id, node_data in s.NODES.items():
             lines.append(
-                '🔹 {} 👉 {}'.format(node_id, node_data['name'])
+                '🔹 <a href="https://explorer.lto.network/addresses/{node_id}">'
+                '{node_id}</a> 👉 {node_name}'.format(
+                    node_id=node_id,
+                    node_name=node_data['name']
+                )
             )
         bot.reply_to(
             message,
             s.MESSAGES['list'].format("\n".join(lines)),
-            parse_mode='Markdown'
+            parse_mode='HTML'
         )
 
     bot.polling()
