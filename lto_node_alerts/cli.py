@@ -38,7 +38,7 @@ def scheduler():
         print('Aborting scheduler...')
 
 
-def start():
+def bot_():
     @bot.message_handler(commands=['start'])
     def on_start(message):
         bot.reply_to(message, s.MESSAGES['start'])

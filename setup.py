@@ -31,8 +31,8 @@ setup(
     include_package_data=True,
     entry_points={
         'console_scripts': [
-            'bot=lto_node_alerts.bot:start',
-            'scheduler=lto_node_alerts.bot:scheduler',
+            'bot=lto_node_alerts.cli:bot_',
+            'scheduler=lto_node_alerts.cli:scheduler',
         ],
     },
     install_requires=_REQUIREMENTS,

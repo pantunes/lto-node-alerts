@@ -2,7 +2,7 @@ import os
 import requests
 from lto_node_alerts import settings as s
 from lto_node_alerts import utils as u
-from lto_node_alerts.bot import bot
+from lto_node_alerts.cli import bot
 
 
 if "GROUP_CHAT_ID" not in os.environ:
