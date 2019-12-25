@@ -27,7 +27,7 @@ def job():
         lines.append(
             '🔹 <a href="https://explorer.lto.network/addresses/{node_id}">'
             '{node_name}</a> 👉 <b>{node_balance} LTO</b>'.format(
-                node_id=_node['node_id'],
+                node_id=node['generator'],
                 node_name=_node['name'],
                 node_balance=u.get_number_formatted(node['balance'])
             )
