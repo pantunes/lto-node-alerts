@@ -15,4 +15,6 @@ NODES = {
         dict(name="Zavodil", min_tokens=10000),
     '3Jhkp3Xtg2wyT6NoEtJB2VQPAHiYuqYUVBp':
         dict(name="LTO-lease.com", min_tokens=10000),
+    '3JxBU36jqvdKrMyhLxG7yW34MRdofeSMEs8':
+        dict(name="WeSimplifyTech", min_tokens=10000),
 }
