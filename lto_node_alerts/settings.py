@@ -1,7 +1,7 @@
-URL = 'https://lto.tools/generators/json'
+URL = 'http://172.104.227.247:6869/addresses/balance/{}'
 
-MESSAGE_MINIMUM_TOKENS = '''The {} Node is running out of tokens.
-The current balance is {} LTO.
+MESSAGE_MINIMUM_TOKENS = '''The Node {} is running out of tokens.
+Current balance 👉 {} LTO.
 Please cash in!'''
 
 MESSAGE_INFO_TOKENS = '''Daily report with Nodes and their current balances:

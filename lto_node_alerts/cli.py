@@ -5,13 +5,7 @@ import time
 from lto_node_alerts import settings as s
 
 
-if "BOT_TOKEN_ID" not in os.environ:
-    raise AssertionError(
-        "Please configure BOT_TOKEN_ID as environment variable"
-    )
-
-
-bot = telebot.TeleBot(os.environ['BOT_TOKEN_ID'])
+tbot = telebot.TeleBot(os.environ['BOT_TOKEN_ID'])
 
 
 def _get_jobs() -> tuple:
@@ -27,6 +21,16 @@ def _get_jobs() -> tuple:
 
 
 def scheduler():
+    if "BOT_TOKEN_ID" not in os.environ:
+        raise AssertionError(
+            "Please configure BOT_TOKEN_ID as environment variable"
+        )
+
+    if "GROUP_CHAT_ID" not in os.environ:
+        raise AssertionError(
+            "Please configure GROUP_CHAT_ID as environment variables"
+        )
+
     for job_handler, job_time in _get_jobs():
         schedule.every().day.at(job_time).do(job_handler)
 
@@ -38,12 +42,17 @@ def scheduler():
         print('Aborting scheduler...')
 
 
-def bot_():
-    @bot.message_handler(commands=['start'])
-    def on_start(message):
-        bot.reply_to(message, s.MESSAGES['start'])
+def bot():
+    if "BOT_TOKEN_ID" not in os.environ:
+        raise AssertionError(
+            "Please configure BOT_TOKEN_ID as environment variable"
+        )
 
-    @bot.message_handler(commands=['list'])
+    @tbot.message_handler(commands=['start'])
+    def on_start(message):
+        tbot.reply_to(message, s.MESSAGES['start'])
+
+    @tbot.message_handler(commands=['list'])
     def on_start(message):
         lines = list()
         for node_id, node_data in s.NODES.items():
@@ -54,10 +63,10 @@ def bot_():
                     node_name=node_data['name']
                 )
             )
-        bot.reply_to(
+        tbot.reply_to(
             message,
             s.MESSAGES['list'].format("\n".join(lines)),
             parse_mode='HTML'
         )
 
-    bot.polling()
+    tbot.polling()
