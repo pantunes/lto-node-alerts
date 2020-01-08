@@ -1,4 +1,10 @@
-URL = 'http://172.104.227.247:6869/addresses/balance/{}'
+NODES = (
+    '172.104.227.247:6869',  # pauloantunes.com/lto
+    '142.93.238.193:6869',   # LowSea Leasing
+    '104.248.80.65:6869',    # Joel_SMART_WORKFLOW_FUNDATION
+)
+
+URL = 'http://{}/addresses/balance/{}'
 
 MESSAGE_MINIMUM_TOKENS = '''The Node {} is running out of tokens.
 Current balance 👉 {} LTO.

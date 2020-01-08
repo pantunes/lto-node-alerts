@@ -8,8 +8,10 @@ from lto_node_alerts.cli import tbot
 def job():
     lines = []
 
-    for node in s.NODES:
-        url = s.URL.format(node)
+    for node_id in s.NODES:
+
+        url = u.get_node_url(node_id)
+
         response = requests.get(url)
 
         if response.status_code != 200:
@@ -21,7 +23,7 @@ def job():
             '🔹 <a href="https://explorer.lto.network/addresses/{node_id}">'
             '{node_name}</a> 👉 <b>{node_balance} LTO</b>'.format(
                 node_id=json['address'],
-                node_name=s.NODES[node]['name'],
+                node_name=s.NODES[node_id]['name'],
                 node_balance=u.get_number_formatted(json['balance']/10**8)
             )
         )
