@@ -5,6 +5,12 @@ import time
 from lto_node_alerts import settings as s
 
 
+if "BOT_TOKEN_ID" not in os.environ:
+    raise AssertionError(
+        "Please configure BOT_TOKEN_ID as environment variable"
+    )
+
+
 tbot = telebot.TeleBot(os.environ['BOT_TOKEN_ID'])
 
 
@@ -21,11 +27,6 @@ def _get_jobs() -> tuple:
 
 
 def scheduler():
-    if "BOT_TOKEN_ID" not in os.environ:
-        raise AssertionError(
-            "Please configure BOT_TOKEN_ID as environment variable"
-        )
-
     if "GROUP_CHAT_ID" not in os.environ:
         raise AssertionError(
             "Please configure GROUP_CHAT_ID as environment variables"
@@ -43,11 +44,6 @@ def scheduler():
 
 
 def bot():
-    if "BOT_TOKEN_ID" not in os.environ:
-        raise AssertionError(
-            "Please configure BOT_TOKEN_ID as environment variable"
-        )
-
     @tbot.message_handler(commands=['start'])
     def on_start(message):
         tbot.reply_to(message, s.MESSAGES['start'])
