@@ -1,29 +1,28 @@
 import os
 import requests
 from lto_node_alerts import settings as s
-from lto_node_alerts.cli import bot
-
-
-if "GROUP_CHAT_ID" not in os.environ:
-    raise AssertionError(
-        "Please configure GROUP_CHAT_ID as environment variables"
-    )
+from lto_node_alerts import utils as u
+from lto_node_alerts.cli import tbot
 
 
 def job():
-    response = requests.get(s.URL)
 
-    if response.status_code != 200:
-        raise AssertionError("Request error: {}".format(s.URL))
+    for node_id in s.NODES:
 
-    for node in response.json():
-        if node['generator'] not in s.NODES:
+        url = u.get_node_url_balance(node_id)
+        response = requests.get(url)
+        if response.status_code != 200:
+            raise AssertionError("Request error: {}".format(url))
+        json = response.json()
+
+        if json['balance'] >= s.NODES[node_id]['min_tokens']:
             continue
 
-        _node = s.NODES[node['generator']]
-
-        if node['balance'] < _node['min_tokens']:
-            bot.send_message(
-                os.environ['GROUP_CHAT_ID'],
-                s.MESSAGE_MINIMUM_TOKENS.format(_node['name'], node['balance'])
-            )
+        tbot.send_message(
+            chat_id=os.environ['GROUP_CHAT_ID'],
+            text=s.MESSAGE_MINIMUM_TOKENS.format(
+                s.NODES[node_id]['name'],
+                u.get_number_formatted(json['balance'])
+            ),
+            parse_mode='HTML'
+        )
