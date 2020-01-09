@@ -38,7 +38,7 @@ def job():
         )
 
     if lines:
-        text = "\n\n".join(lines)
+        text = "\n".join(lines)
     else:
         text = "(no nodes)"
 
