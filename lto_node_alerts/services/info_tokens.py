@@ -10,26 +10,35 @@ def job():
 
     for node_id in s.NODES:
 
-        url = u.get_node_url(node_id)
-
+        url = u.get_node_url_balance(node_id)
         response = requests.get(url)
-
         if response.status_code != 200:
             raise AssertionError("Request error: {}".format(url))
-
         json = response.json()
+
+        url = u.get_node_url_effective_balance(node_id)
+        response = requests.get(url)
+        if response.status_code != 200:
+            raise AssertionError("Request error: {}".format(url))
+        json['effective_balance'] = response.json()['balance']
 
         lines.append(
             '🔹 <a href="https://explorer.lto.network/addresses/{node_id}">'
-            '{node_name}</a> 👉 <b>{node_balance} LTO</b>'.format(
+            '{node_name}</a>:\n'
+            '  🔸 Balance 👉 <b>{node_balance} LTO</b>\n'
+            '  🔸 Effective Balance 👉 <b>{node_effective_balance} LTO</b>\n'.
+            format(
                 node_id=json['address'],
                 node_name=s.NODES[node_id]['name'],
-                node_balance=u.get_number_formatted(json['balance']/10**8)
+                node_balance=u.get_number_formatted(json['balance']/10**8),
+                node_effective_balance=u.get_number_formatted(
+                    json['effective_balance']/10**8
+                )
             )
         )
 
     if lines:
-        text = "\n".join(lines)
+        text = "\n\n".join(lines)
     else:
         text = "(no nodes)"
 

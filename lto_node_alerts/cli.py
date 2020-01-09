@@ -69,4 +69,7 @@ def bot():
             parse_mode='HTML'
         )
 
-    tbot.polling()
+    try:
+        tbot.polling()
+    except KeyboardInterrupt:
+        print('Aborting bot...')

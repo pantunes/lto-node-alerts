@@ -9,13 +9,10 @@ def job():
 
     for node_id in s.NODES:
 
-        url = u.get_node_url(node_id)
-
+        url = u.get_node_url_balance(node_id)
         response = requests.get(url)
-
         if response.status_code != 200:
             raise AssertionError("Request error: {}".format(url))
-
         json = response.json()
 
         if json['balance'] >= s.NODES[node_id]['min_tokens']:
