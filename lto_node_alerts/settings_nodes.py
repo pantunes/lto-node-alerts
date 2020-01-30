@@ -25,4 +25,7 @@ NODES = {
 
     '3JxBU36jqvdKrMyhLxG7yW34MRdofeSMEs8':
         dict(name="WeSimplifyTech", min_tokens=1),
+
+    '3JmPQm5TJPvPKourLDJQKk4YSMBRPvv8g61':
+        dict(name="@gr4p3crypto", min_tokens=1),
 }
