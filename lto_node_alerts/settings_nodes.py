@@ -27,5 +27,5 @@ NODES = {
         dict(name="WeSimplifyTech", min_tokens=1),
 
     '3JmPQm5TJPvPKourLDJQKk4YSMBRPvv8g61':
-        dict(name="@gr4p3crypto", min_tokens=1),
+        dict(name="Simon Gr4p3 Node", min_tokens=1),
 }
