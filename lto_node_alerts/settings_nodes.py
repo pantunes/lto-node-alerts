@@ -28,4 +28,7 @@ NODES = {
 
     '3JmPQm5TJPvPKourLDJQKk4YSMBRPvv8g61':
         dict(name="Simon Gr4p3 Node", min_tokens=1),
+
+    '3JsAJR4gJ1j6fmAxjLCrEjLnh2EMZqtnHN7':
+        dict(name="Vega's Node", min_tokens=1),
 }
