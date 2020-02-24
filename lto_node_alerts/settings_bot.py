@@ -3,7 +3,7 @@ MESSAGES = dict(
 
 The following commands are currently available:
 
-/list - List all nodes that daily reports are generated.
+/list - List of all nodes that are included in the Daily Balances Report.
 
 Cheers!
 ''',
