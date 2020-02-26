@@ -44,6 +44,6 @@ def job():
 
     tbot.send_message(
         chat_id=os.environ['GROUP_CHAT_ID'],
-        text=s.MESSAGE_INFO_TOKENS.format(text),
+        text=s.MESSAGE_INFO_NODES.format(text),
         parse_mode='HTML'
     )

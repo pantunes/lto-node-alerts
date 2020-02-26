@@ -17,12 +17,12 @@ tbot = telebot.TeleBot(os.environ['BOT_TOKEN_ID'])
 def _get_jobs() -> tuple:
     from lto_node_alerts.services.minimum_tokens import \
         job as job_minimum_tokens
-    from lto_node_alerts.services.info_tokens import \
-        job as job_info_tokens
+    from lto_node_alerts.services.info_nodes import \
+        job as job_info_nodes
 
     return (
         (job_minimum_tokens, s.JOB_MINIMUM_TOKENS_TIME),
-        (job_info_tokens, s.JOB_INFO_TOKENS_TIME),
+        (job_info_nodes, s.JOB_INFO_NODES_TIME),
     )
 
 
