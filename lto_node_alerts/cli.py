@@ -11,14 +11,14 @@ if "BOT_TOKEN_ID" not in os.environ:
     )
 
 
-tbot = telebot.TeleBot(os.environ['BOT_TOKEN_ID'])
+tbot = telebot.TeleBot(os.environ["BOT_TOKEN_ID"])
 
 
 def _get_jobs() -> tuple:
-    from lto_node_alerts.services.minimum_tokens import \
-        job as job_minimum_tokens
-    from lto_node_alerts.services.info_nodes import \
-        job as job_info_nodes
+    from lto_node_alerts.services.minimum_tokens import (
+        job as job_minimum_tokens,
+    )
+    from lto_node_alerts.services.info_nodes import job as job_info_nodes
 
     return (
         (job_minimum_tokens, s.JOB_MINIMUM_TOKENS_TIME),
@@ -40,32 +40,31 @@ def scheduler():
             schedule.run_pending()
             time.sleep(1)
     except KeyboardInterrupt:
-        print('Aborting scheduler...')
+        print("Aborting scheduler...")
 
 
 def bot():
-    @tbot.message_handler(commands=['start'])
+    @tbot.message_handler(commands=["start"])
     def on_start(message):
-        tbot.reply_to(message, s.MESSAGES['start'])
+        tbot.reply_to(message, s.MESSAGES["start"])
 
-    @tbot.message_handler(commands=['list'])
+    @tbot.message_handler(commands=["list"])
     def on_start(message):
         lines = list()
         for node_id, node_data in s.NODES.items():
             lines.append(
                 '🔹 <a href="https://explorer.lto.network/addresses/{node_id}">'
-                '{node_id}</a> 👉 {node_name}'.format(
-                    node_id=node_id,
-                    node_name=node_data['name']
+                "{node_id}</a> 👉 {node_name}".format(
+                    node_id=node_id, node_name=node_data["name"]
                 )
             )
         tbot.reply_to(
             message,
-            s.MESSAGES['list'].format("\n".join(lines)),
-            parse_mode='HTML'
+            s.MESSAGES["list"].format("\n".join(lines)),
+            parse_mode="HTML",
         )
 
     try:
         tbot.polling()
     except KeyboardInterrupt:
-        print('Aborting bot...')
+        print("Aborting bot...")

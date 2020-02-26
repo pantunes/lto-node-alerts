@@ -15,14 +15,14 @@ def job():
             raise AssertionError("Request error: {}".format(url))
         json = response.json()
 
-        if json['balance'] >= s.NODES[node_id]['min_tokens']:
+        if json["balance"] >= s.NODES[node_id]["min_tokens"]:
             continue
 
         tbot.send_message(
-            chat_id=os.environ['GROUP_CHAT_ID'],
+            chat_id=os.environ["GROUP_CHAT_ID"],
             text=s.MESSAGE_MINIMUM_TOKENS.format(
-                s.NODES[node_id]['name'],
-                u.get_number_formatted(json['balance'])
+                s.NODES[node_id]["name"],
+                u.get_number_formatted(json["balance"]),
             ),
-            parse_mode='HTML'
+            parse_mode="HTML",
         )
