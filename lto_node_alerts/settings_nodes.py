@@ -33,4 +33,7 @@ NODES = {
     "3JnZLvmVBXsc2XMug4e6yjyvPehr1Fjx9oM": dict(
         name="LowSea Leasing", min_tokens=1
     ),
+    "3JjtGYPannaVDMvbjdyLrmo39LohZ8KESdL": dict(
+        name="humblenode", min_tokens=1
+    ),
 }
