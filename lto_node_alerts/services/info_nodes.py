@@ -5,14 +5,18 @@ from lto_node_alerts import utils as u
 from lto_node_alerts.cli import tbot
 
 
-def _get_leases():
-    url = "https://lto.tools/lpos/json"
+def _get_stats_from_lpos():
+    url = s.LPOS_URL
     response = requests.get(url)
     if response.status_code != 200:
         raise AssertionError("Request error: {}".format(url))
-    return {
-        n["generator"]: n for n in response.json() if n["generator"] in s.NODES
-    }
+    _json = response.json()
+    return (
+        {n["generator"]: n for n in _json if n["generator"] in s.NODES},
+        len(_json),
+        sum([n["fromLeases"] for n in _json]) / 10 ** 8,
+        sum([n["balance"] for n in _json]) / 10 ** 8,
+    )
 
 
 def _get_node_balance(node_id):
@@ -34,7 +38,12 @@ def get_node_effective_balance(node_id):
 def job():
     lines = []
 
-    leases = _get_leases()
+    (
+        leases,
+        num_total_lessors,
+        total_leased,
+        total_balance,
+    ) = _get_stats_from_lpos()
 
     for node_id in s.NODES:
 
@@ -75,14 +84,28 @@ def job():
         lines.append(row)
 
     if lines:
-        text = "\n".join(lines)
+        body = "\n".join(lines)
     else:
-        text = "(no nodes)"
+        body = "(no nodes)"
 
-    # print(s.MESSAGE_INFO_NODES.format(text))
+    if "DEBUG" in os.environ:
+        print(
+            s.MESSAGE_INFO_NODES.format(
+                body=body,
+                num_total_lessors=u.get_number_formatted(num_total_lessors),
+                total_leased=u.get_number_formatted(total_leased),
+                total_balance=u.get_number_formatted(total_balance),
+            )
+        )
+        return
 
     tbot.send_message(
         chat_id=os.environ["GROUP_CHAT_ID"],
-        text=s.MESSAGE_INFO_NODES.format(text),
+        text=s.MESSAGE_INFO_NODES.format(
+            body=body,
+            num_total_lessors=u.get_number_formatted(num_total_lessors),
+            total_leased=u.get_number_formatted(total_leased),
+            total_balance=u.get_number_formatted(total_balance),
+        ),
         parse_mode="HTML",
     )

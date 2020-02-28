@@ -6,6 +6,7 @@ NODES_ADDRESSES = (
     # add more reliable nodes below
 )
 
+LPOS_URL = "https://lto.tools/lpos/json"
 NODE_URL_BALANCE = "http://{}/addresses/balance/{}"
 NODE_URL_EFFECTIVE_BALANCE = "http://{}/addresses/effectiveBalance/{}"
 
@@ -15,7 +16,12 @@ Please cash in!"""
 
 MESSAGE_INFO_NODES = """Daily report with Nodes and their current balances:
 
-{}
+{body}
+
+<b>Totals from Nodes that lease:</b>
+  💎 Number of Lessors:  👉 {num_total_lessors}
+  💎 Leased:  👉 {total_leased} LTO
+  💎 Balance:  👉 {total_balance} LTO
 
 Contact @pjmlantunes to add or remove your Node from this list."""
 
