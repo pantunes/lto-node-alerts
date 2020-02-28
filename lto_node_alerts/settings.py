@@ -18,7 +18,7 @@ MESSAGE_INFO_NODES = """Daily report with Nodes and their current balances:
 
 {body}
 
-<b>Totals from Nodes that lease:</b>
+<b>Totals from Nodes that lease in LTO Network:</b>
   💎 Number of Lessors:  👉 {num_total_lessors}
   💎 Leased:  👉 {total_leased} LTO
   💎 Balance:  👉 {total_balance} LTO
