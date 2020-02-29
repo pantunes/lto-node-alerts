@@ -1,3 +1,5 @@
+BROKER_URL = "redis://localhost:6379"
+
 NODES_ADDRESSES = (
     "172.104.227.247:6869",  # pauloantunes.com/lto
     "142.93.238.193:6869",  # LowSea Leasing
@@ -19,9 +21,12 @@ MESSAGE_INFO_NODES = """Daily report with Nodes and their current balances:
 {body}
 
 <b>Totals from Nodes that lease in LTO Network:</b>
-  💎 Number of Lessors:  👉 {num_total_lessors}
-  💎 Leased:  👉 {total_leased} LTO
-  💎 Balance:  👉 {total_balance} LTO
+  💎 Number of Lessors:  👉 <b>{num_total_lessors}</b> <i>{num_total_lessors_change} %</i>
+  💎 Leased:  👉 <b>{total_leased} LTO</b> <i>{total_leased_change} %</i>
+  💎 Balance:  👉 <b>{total_balance} LTO</b> <i>{total_balance_change} %</i>
+
+
+(* - All percentages are related with yesterday's values)
 
 Contact @pjmlantunes to add or remove your Node from this list."""
 
@@ -30,7 +35,6 @@ JOB_INFO_NODES_TIME = "10:30"
 
 
 from lto_node_alerts.settings_nodes import NODES  # noqa
-
 from lto_node_alerts.settings_bot import MESSAGES  # noqa
 
 __all__ = ["NODES", "MESSAGES"]

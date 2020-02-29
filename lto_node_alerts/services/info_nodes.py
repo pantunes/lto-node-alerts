@@ -1,8 +1,14 @@
 import os
 import requests
+import redis
 from lto_node_alerts import settings as s
 from lto_node_alerts import utils as u
 from lto_node_alerts.cli import tbot
+
+
+REDIS_KEY = "LTO-Totals-Changed"
+
+red = redis.Redis.from_url(s.BROKER_URL)
 
 
 def _get_stats_from_lpos():
@@ -52,12 +58,18 @@ def job():
             "balance"
         ]
 
+        node_balance = json["balance"] / 10 ** 8
+        node_effective_balance = json["effective_balance"] / 10 ** 8
+
         kwargs = dict(
             node_id=json["address"],
             node_name=s.NODES[node_id]["name"],
-            node_balance=u.get_number_formatted(json["balance"] / 10 ** 8),
+            node_balance=u.get_number_formatted(node_balance),
+            node_leases=u.get_number_formatted(
+                (node_effective_balance - node_balance) / 10 ** 8
+            ),
             node_effective_balance=u.get_number_formatted(
-                json["effective_balance"] / 10 ** 8
+                node_effective_balance
             ),
         )
 
@@ -65,6 +77,7 @@ def job():
             '🔹 <a href="https://explorer.lto.network/addresses/{node_id}">'
             "{node_name}</a>:\n"
             "  🔸 Balance 👉 <b>{node_balance} LTO</b>\n"
+            "  🔸 Leases 👉 <b>{node_leases} LTO</b>\n"
             "  🔸 Effective Balance 👉 <b>{node_effective_balance} "
             "LTO</b>\n".format(**kwargs)
         )
@@ -88,24 +101,47 @@ def job():
     else:
         body = "(no nodes)"
 
+    num_total_lessors_change = 0
+    total_leased_change = 0
+    total_balance_change = 0
+
+    in_redis = red.hgetall(REDIS_KEY)
+    if in_redis:
+        num_total_lessors_change = (
+            num_total_lessors - float(in_redis[b"num_total_lessors"])
+        ) / float(in_redis[b"num_total_lessors"])
+        total_leased_change = (
+            total_leased - float(in_redis[b"total_leased"])
+        ) / float(in_redis[b"total_leased"])
+        total_balance_change = (
+            total_balance - float(in_redis[b"total_balance"])
+        ) / float(in_redis[b"total_balance"])
+
+    red.hmset(
+        REDIS_KEY,
+        dict(
+            num_total_lessors=num_total_lessors,
+            total_leased=total_leased,
+            total_balance=total_balance,
+        ),
+    )
+
+    text = s.MESSAGE_INFO_NODES.format(
+        body=body,
+        num_total_lessors=u.get_number_formatted(num_total_lessors),
+        num_total_lessors_change=u.get_number_formatted(
+            num_total_lessors_change
+        ),
+        total_leased=u.get_number_formatted(total_leased),
+        total_leased_change=u.get_number_formatted(total_leased_change),
+        total_balance=u.get_number_formatted(total_balance),
+        total_balance_change=u.get_number_formatted(total_balance_change),
+    )
+
     if "DEBUG" in os.environ:
-        print(
-            s.MESSAGE_INFO_NODES.format(
-                body=body,
-                num_total_lessors=u.get_number_formatted(num_total_lessors),
-                total_leased=u.get_number_formatted(total_leased),
-                total_balance=u.get_number_formatted(total_balance),
-            )
-        )
+        print(text)
         return
 
     tbot.send_message(
-        chat_id=os.environ["GROUP_CHAT_ID"],
-        text=s.MESSAGE_INFO_NODES.format(
-            body=body,
-            num_total_lessors=u.get_number_formatted(num_total_lessors),
-            total_leased=u.get_number_formatted(total_leased),
-            total_balance=u.get_number_formatted(total_balance),
-        ),
-        parse_mode="HTML",
+        chat_id=os.environ["GROUP_CHAT_ID"], text=text, parse_mode="HTML",
     )

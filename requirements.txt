@@ -1,3 +1,4 @@
 pyTelegramBotAPI
 requests
 schedule
+redis
