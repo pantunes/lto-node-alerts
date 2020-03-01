@@ -66,7 +66,7 @@ def job():
             node_name=s.NODES[node_id]["name"],
             node_balance=u.get_number_formatted(node_balance),
             node_leases=u.get_number_formatted(
-                (node_effective_balance - node_balance) / 10 ** 8
+                (node_effective_balance - node_balance)
             ),
             node_effective_balance=u.get_number_formatted(
                 node_effective_balance
