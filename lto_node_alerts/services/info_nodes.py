@@ -107,15 +107,18 @@ def job():
 
     in_redis = red.hgetall(REDIS_KEY)
     if in_redis:
-        num_total_lessors_change = ((
-            num_total_lessors - float(in_redis[b"num_total_lessors"])
-        ) / float(in_redis[b"num_total_lessors"])) * 100
-        total_leased_change = ((
-            total_leased - float(in_redis[b"total_leased"])
-        ) / float(in_redis[b"total_leased"])) * 100
-        total_balance_change = ((
-            total_balance - float(in_redis[b"total_balance"])
-        ) / float(in_redis[b"total_balance"])) * 100
+        num_total_lessors_change = (
+            (num_total_lessors - float(in_redis[b"num_total_lessors"]))
+            / float(in_redis[b"num_total_lessors"])
+        ) * 100
+        total_leased_change = (
+            (total_leased - float(in_redis[b"total_leased"]))
+            / float(in_redis[b"total_leased"])
+        ) * 100
+        total_balance_change = (
+            (total_balance - float(in_redis[b"total_balance"]))
+            / float(in_redis[b"total_balance"])
+        ) * 100
 
     red.hmset(
         REDIS_KEY,
