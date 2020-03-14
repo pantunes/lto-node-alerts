@@ -5,6 +5,10 @@ NODES_ADDRESSES = (
     "142.93.238.193:6869",  # LowSea Leasing
     "142.93.142.26:6869",  # Liquid Leasing Network
     "95.216.198.5:6869",  # ZAVODIL
+    "167.86.76.73:6869",  # KruptosNomisma
+    "63.34.255.13:6869",  # jasny
+    "163.172.89.89:6869",  # lto.banteg.xyz
+    "88.198.26.92:6869",  # WeSimplifyTech
     # add more reliable nodes below
 )
 
