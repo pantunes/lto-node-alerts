@@ -1,9 +1,9 @@
 import os
 import requests
 import redis
+import telebot
 from lto_node_alerts import settings as s
 from lto_node_alerts import utils as u
-from lto_node_alerts.cli import tbot
 
 
 REDIS_KEY = "LTO-Totals-Changed"
@@ -43,7 +43,6 @@ def get_node_effective_balance(node_id):
 
 def job():
     lines = []
-
     (
         leases,
         num_total_lessors,
@@ -145,6 +144,7 @@ def job():
         print(text)
         return
 
+    tbot = telebot.TeleBot(os.environ["BOT_TOKEN_ID"])
     tbot.send_message(
         chat_id=os.environ["GROUP_CHAT_ID"], text=text, parse_mode="HTML",
     )

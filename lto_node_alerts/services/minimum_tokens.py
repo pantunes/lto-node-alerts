@@ -1,14 +1,12 @@
 import os
 import requests
+import telebot
 from lto_node_alerts import settings as s
 from lto_node_alerts import utils as u
-from lto_node_alerts.cli import tbot
 
 
 def job():
-
     for node_id in s.NODES:
-
         url = u.get_node_url_balance(node_id)
         response = requests.get(url)
         if response.status_code != 200:
@@ -18,6 +16,7 @@ def job():
         if json["balance"] >= s.NODES[node_id]["min_tokens"]:
             continue
 
+        tbot = telebot.TeleBot(os.environ["BOT_TOKEN_ID"])
         tbot.send_message(
             chat_id=os.environ["GROUP_CHAT_ID"],
             text=s.MESSAGE_MINIMUM_TOKENS.format(
