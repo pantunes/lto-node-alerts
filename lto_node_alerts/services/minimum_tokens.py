@@ -1,6 +1,7 @@
 import os
 import requests
 import telebot
+import time
 from lto_node_alerts import settings as s
 from lto_node_alerts import utils as u
 
@@ -17,7 +18,8 @@ def job():
             continue
 
         tbot = telebot.TeleBot(os.environ["BOT_TOKEN_ID"])
-        tbot.send_message(
+
+        kwargs = dict(
             chat_id=os.environ["GROUP_CHAT_ID"],
             text=s.MESSAGE_MINIMUM_TOKENS.format(
                 s.NODES[node_id]["name"],
@@ -25,3 +27,14 @@ def job():
             ),
             parse_mode="HTML",
         )
+
+        try:
+            tbot.send_message(**kwargs)
+        except (
+                ConnectionAbortedError,
+                ConnectionResetError,
+                ConnectionRefusedError,
+                ConnectionError
+        ):
+            time.sleep(5)
+            tbot.send_message(**kwargs)
