@@ -77,6 +77,7 @@ def job():
         row = (
             '🔹 <a href="https://explorer.lto.network/addresses/{node_id}">'
             "{node_name}</a>:\n"
+            "  🔸 Ranking 👉 <b>{{ranking}}</b>\n"
             "  🔸 Balance 👉 <b>{node_balance} LTO</b>\n"
             "  🔸 Leases 👉 <b>{node_leases} LTO</b>\n"
             "  🔸 Effective Balance 👉 <b>{node_effective_balance} "
@@ -88,7 +89,6 @@ def job():
             num_leases = len(_leases)
             unique_leasers = len(list(set([x["sender"] for x in _leases])))
             row += (
-                "  🔸 Ranking 👉 <b>{ranking}</b>\n"
                 "  🔸 Number of Leases 👉 <b>{num_leases}</b>\n"
                 "  🔸 Unique Leasers 👉 <b>{unique_leasers}</b>\n".format(
                     ranking=leases[node_id][1],
