@@ -88,10 +88,10 @@ def job():
             _leases = leases[node_id][0]["leases"]
             num_leases = len(_leases)
             unique_leasers = len(list(set([x["sender"] for x in _leases])))
+            row = row.format(ranking=leases[node_id][1])
             row += (
                 "  🔸 Number of Leases 👉 <b>{num_leases}</b>\n"
                 "  🔸 Unique Leasers 👉 <b>{unique_leasers}</b>\n".format(
-                    ranking=leases[node_id][1],
                     num_leases=u.get_number_formatted(num_leases),
                     unique_leasers=u.get_number_formatted(unique_leasers),
                 )
