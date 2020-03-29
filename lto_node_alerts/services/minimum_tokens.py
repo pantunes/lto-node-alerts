@@ -2,6 +2,7 @@ import os
 import requests
 import telebot
 import time
+from requests.exceptions import ConnectionError
 from lto_node_alerts import settings as s
 from lto_node_alerts import utils as u
 
@@ -31,10 +32,7 @@ def job():
         try:
             tbot.send_message(**kwargs)
         except (
-                ConnectionAbortedError,
-                ConnectionResetError,
-                ConnectionRefusedError,
-                ConnectionError
+            ConnectionError,
         ):
             time.sleep(5)
             tbot.send_message(**kwargs)
