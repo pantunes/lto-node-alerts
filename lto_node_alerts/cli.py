@@ -65,6 +65,6 @@ def bot():
         )
 
     try:
-        tbot.polling()
+        tbot.polling(none_stop=True)
     except KeyboardInterrupt:
         print("Aborting bot...")
