@@ -2,6 +2,7 @@ import os
 import telebot
 import schedule
 import time
+from requests.exceptions import ConnectionError
 from lto_node_alerts import settings as s
 
 
@@ -50,7 +51,7 @@ def bot():
 
     @tbot.message_handler(commands=["list"])
     def on_start(message):
-        lines = list()
+        lines = []
         for node_id, node_data in s.NODES.items():
             lines.append(
                 '🔹 <a href="https://explorer.lto.network/addresses/{node_id}">'
@@ -58,11 +59,20 @@ def bot():
                     node_id=node_id, node_name=node_data["name"]
                 )
             )
-        tbot.reply_to(
-            message,
-            s.MESSAGES["list"].format("\n".join(lines)),
+
+        kwargs = dict(
+            message=message,
+            text=s.MESSAGES["list"].format("\n".join(lines)),
             parse_mode="HTML",
         )
+
+        try:
+            tbot.reply_to(**kwargs)
+        except (
+            ConnectionError,
+        ):
+            time.sleep(5)
+            tbot.reply_to(**kwargs)
 
     try:
         tbot.polling(none_stop=True)
