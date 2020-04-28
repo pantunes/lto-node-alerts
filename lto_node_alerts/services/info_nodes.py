@@ -157,10 +157,11 @@ def job():
         parse_mode="HTML",
     )
 
-    try:
-        tbot.send_message(**kwargs)
-    except (
-        ConnectionError,
-    ):
-        time.sleep(2.0)
-        tbot.send_message(**kwargs)
+    for x in range(4):
+        try:
+            tbot.send_message(**kwargs)
+            break
+        except (
+            ConnectionError,
+        ):
+            time.sleep(5)

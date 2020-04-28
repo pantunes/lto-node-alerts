@@ -2,6 +2,7 @@ import os
 import telebot
 import schedule
 import time
+from urllib3.exceptions import ReadTimeoutError
 from requests.exceptions import ConnectionError
 from lto_node_alerts import settings as s
 
@@ -74,7 +75,10 @@ def bot():
             time.sleep(5)
             tbot.reply_to(**kwargs)
 
-    try:
-        tbot.polling(none_stop=True)
-    except KeyboardInterrupt:
-        print("Aborting bot...")
+    for x in range(4):
+        try:
+            tbot.polling(none_stop=True, timeout=60)
+        except KeyboardInterrupt:
+            print("Aborting bot...")
+        except ReadTimeoutError:
+            print("Socket timed out...")
