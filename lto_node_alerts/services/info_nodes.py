@@ -20,8 +20,11 @@ def _get_stats_from_lpos():
         raise AssertionError("Request error: {}".format(url))
     _json = response.json()
     return (
-        {n["generator"]: (n, i) for i, n in enumerate(
-            _json, start=1) if n["generator"] in s.NODES},
+        {
+            n["generator"]: (n, i)
+            for i, n in enumerate(_json, start=1)
+            if n["generator"] in s.NODES
+        },
         len(_json),
         sum([n["fromLeases"] for n in _json]) / 10 ** 8,
         sum([n["balance"] for n in _json]) / 10 ** 8,
@@ -166,16 +169,12 @@ def job():
     tbot = telebot.TeleBot(os.environ["BOT_TOKEN_ID"])
 
     kwargs = dict(
-        chat_id=os.environ["GROUP_CHAT_ID"],
-        text=text,
-        parse_mode="HTML",
+        chat_id=os.environ["GROUP_CHAT_ID"], text=text, parse_mode="HTML",
     )
 
     for x in range(s.MAX_RETRIES):
         try:
             tbot.send_message(**kwargs)
             break
-        except (
-            ConnectionError,
-        ):
+        except (ConnectionError,):
             time.sleep(5)

@@ -69,9 +69,7 @@ def bot():
 
         try:
             tbot.reply_to(**kwargs)
-        except (
-            ConnectionError,
-        ):
+        except (ConnectionError,):
             time.sleep(5)
             tbot.reply_to(**kwargs)
 

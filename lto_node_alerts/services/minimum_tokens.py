@@ -33,7 +33,5 @@ def job():
             try:
                 tbot.send_message(**kwargs)
                 break
-            except (
-                ConnectionError,
-            ):
+            except (ConnectionError,):
                 time.sleep(5)
