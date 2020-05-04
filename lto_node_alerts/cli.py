@@ -75,7 +75,7 @@ def bot():
             time.sleep(5)
             tbot.reply_to(**kwargs)
 
-    for x in range(4):
+    for x in range(s.MAX_RETRIES):
         try:
             tbot.polling(none_stop=True, timeout=60)
         except KeyboardInterrupt:

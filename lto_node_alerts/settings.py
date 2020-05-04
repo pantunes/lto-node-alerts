@@ -38,6 +38,7 @@ Contact @pjmlantunes to add or remove your Node from this list."""
 JOB_MINIMUM_TOKENS_TIME = "10:00"
 JOB_INFO_NODES_TIME = "10:30"
 
+MAX_RETRIES = 4
 
 from lto_node_alerts.settings_nodes import NODES  # noqa
 from lto_node_alerts.settings_bot import MESSAGES  # noqa

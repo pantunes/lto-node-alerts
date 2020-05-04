@@ -29,7 +29,7 @@ def job():
             parse_mode="HTML",
         )
 
-        for x in range(4):
+        for x in range(s.MAX_RETRIES):
             try:
                 tbot.send_message(**kwargs)
                 break

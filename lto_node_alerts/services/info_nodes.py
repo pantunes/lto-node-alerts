@@ -30,7 +30,7 @@ def _get_stats_from_lpos():
 
 def _get_node_balance(node_id):
     response = None
-    for x in range(4):
+    for x in range(s.MAX_RETRIES):
         url = u.get_node_url_balance(node_id)
         try:
             response = requests.get(url)
@@ -45,7 +45,7 @@ def _get_node_balance(node_id):
 
 def get_node_effective_balance(node_id):
     response = None
-    for x in range(4):
+    for x in range(s.MAX_RETRIES):
         url = u.get_node_url_effective_balance(node_id)
         try:
             response = requests.get(url)
@@ -171,7 +171,7 @@ def job():
         parse_mode="HTML",
     )
 
-    for x in range(4):
+    for x in range(s.MAX_RETRIES):
         try:
             tbot.send_message(**kwargs)
             break
