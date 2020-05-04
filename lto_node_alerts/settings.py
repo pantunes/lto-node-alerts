@@ -9,6 +9,11 @@ NODES_ADDRESSES = (
     "63.34.255.13:6869",  # jasny
     "163.172.89.89:6869",  # lto.banteg.xyz
     "88.198.26.92:6869",  # WeSimplifyTech
+    "23.106.254.106:6869",  # LTO Network Node Japan
+    "104.248.80.65:6869",  # Joel_SMART_WORKFLOW_FUNDATION
+    "23.19.61.195:6869",  # To The Moon
+    "94.177.241.31:6869"  # iiccSuperNode
+    "81.169.222.76:6869",  # NODEX06
     # add more reliable nodes below
 )
 
