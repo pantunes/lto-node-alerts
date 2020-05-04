@@ -29,18 +29,32 @@ def _get_stats_from_lpos():
 
 
 def _get_node_balance(node_id):
-    url = u.get_node_url_balance(node_id)
-    response = requests.get(url)
-    if response.status_code != 200:
-        raise AssertionError("Request error: {}".format(url))
+    response = None
+    for x in range(4):
+        url = u.get_node_url_balance(node_id)
+        try:
+            response = requests.get(url)
+        except Exception as err:
+            print(str(err))
+        if response is None:
+            continue
+        if response.status_code == 200:
+            break
     return response.json()
 
 
 def get_node_effective_balance(node_id):
-    url = u.get_node_url_effective_balance(node_id)
-    response = requests.get(url)
-    if response.status_code != 200:
-        raise AssertionError("Request error: {}".format(url))
+    response = None
+    for x in range(4):
+        url = u.get_node_url_effective_balance(node_id)
+        try:
+            response = requests.get(url)
+        except Exception as err:
+            print(str(err))
+        if response is None:
+            continue
+        if response.status_code == 200:
+            break
     return response.json()
 
 
