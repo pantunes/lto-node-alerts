@@ -24,11 +24,11 @@ NODES = {
     "3JxBU36jqvdKrMyhLxG7yW34MRdofeSMEs8": dict(
         name="WeSimplifyTech", min_tokens=1
     ),
-    "3JmPQm5TJPvPKourLDJQKk4YSMBRPvv8g61": dict(
+    "3JtdHQQPCj8nYtqY7PSpVMAAQWNepV2zoJY": dict(
         name="Simon Gr4p3 Node", min_tokens=1
     ),
     "3JsAJR4gJ1j6fmAxjLCrEjLnh2EMZqtnHN7": dict(
-        name="Vega's Node", min_tokens=1
+        name="Vega Node", min_tokens=1
     ),
     "3JnZLvmVBXsc2XMug4e6yjyvPehr1Fjx9oM": dict(
         name="LowSea Leasing", min_tokens=1

@@ -1,19 +1,24 @@
 import os
-import requests
 import telebot
-import time
 from requests.exceptions import ConnectionError
-from lto_node_alerts import settings as s
+from tenacity import (
+    retry,
+    wait_fixed,
+    stop_after_attempt,
+    retry_if_exception_type,
+)
 from lto_node_alerts import utils as u
+from lto_node_alerts import settings as s
 
 
+@retry(
+    retry=retry_if_exception_type(ConnectionError),
+    wait=wait_fixed(1),
+    stop=stop_after_attempt(10),
+)
 def job():
     for node_id in s.NODES:
-        url = u.get_node_url_balance(node_id)
-        response = requests.get(url)
-        if response.status_code != 200:
-            raise AssertionError("Request error: {}".format(url))
-        json = response.json()
+        json = u.get_(u.get_node_url_balance(node_id))
 
         if json["balance"] >= s.NODES[node_id]["min_tokens"]:
             continue
@@ -29,9 +34,4 @@ def job():
             parse_mode="HTML",
         )
 
-        for x in range(s.MAX_RETRIES):
-            try:
-                tbot.send_message(**kwargs)
-                break
-            except (ConnectionError,):
-                time.sleep(5)
+        tbot.send_message(**kwargs)

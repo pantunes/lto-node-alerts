@@ -1,5 +1,7 @@
 BROKER_URL = "redis://localhost:6379"
 
+REDIS_KEY = "LTO-Totals-Changed"
+
 NODES_ADDRESSES = (
     "172.104.227.247:6869",  # pauloantunes.com/lto
     "142.93.238.193:6869",  # LowSea Leasing
@@ -18,6 +20,7 @@ NODES_ADDRESSES = (
 )
 
 LPOS_URL = "https://lto.tools/lpos/json"
+GENERATORS_URL = "https://lto.tools/generators/json"
 NODE_URL_BALANCE = "http://{}/addresses/balance/{}"
 NODE_URL_EFFECTIVE_BALANCE = "http://{}/addresses/effectiveBalance/{}"
 
@@ -25,7 +28,7 @@ MESSAGE_MINIMUM_TOKENS = """The Node {} is running out of tokens.
 Current balance 👉 {} LTO.
 Please cash in!"""
 
-MESSAGE_INFO_NODES = """Daily report with Nodes and their current balances:
+MESSAGE_INFO_NODES = """Daily report with Nodes and their current stats:
 
 {body}
 
@@ -36,14 +39,12 @@ MESSAGE_INFO_NODES = """Daily report with Nodes and their current balances:
   💎 Balance:  👉 <b>{total_balance} LTO</b>   <i>({total_balance_change}%)</i>
 
 
-(* - Percentages are related with yesterday's values)
+<i>(* - Percentages are related with yesterday's values)</i>
 
 Contact @pjmlantunes to add or remove your Node from this list."""
 
 JOB_MINIMUM_TOKENS_TIME = "10:00"
 JOB_INFO_NODES_TIME = "10:30"
-
-MAX_RETRIES = 4
 
 from lto_node_alerts.settings_nodes import NODES  # noqa
 from lto_node_alerts.settings_bot import MESSAGES  # noqa
